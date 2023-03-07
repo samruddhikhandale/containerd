@@ -13,8 +13,10 @@ RUN apt-get update && export DEBIAN_FRONTEND=noninteractive \
 RUN echo "Downloading protoc..." && \
     VERSION_LIST="$(curl -sSL -H "Accept: application/vnd.github.v3+json" "https://api.github.com/repos/protocolbuffers/protobuf/tags" | grep -oP '"name":\s*"v\K[0-9]+\.[0-9]+"' | tr -d '"' | sort -rV )" && \
     PROTOC_LATEST_VERSION="$(echo "${VERSION_LIST}" | head -n 1)" && \
-    wget -c https://github.com/protocolbuffers/protobuf/releases/download/v${PROTOC_LATEST_VERSION}/protoc-${PROTOC_LATEST_VERSION}-linux-$(uname -m).zip && \
-    sudo unzip protoc-${PROTOC_LATEST_VERSION}-linux-$(uname -m).zip -d /usr/local
+    PROTOC_FILE_NAME="protoc-${PROTOC_LATEST_VERSION}-linux-$(uname -m).zip"
+    wget -c https://github.com/protocolbuffers/protobuf/releases/download/v${PROTOC_LATEST_VERSION}/${PROTOC_FILE_NAME} && \
+    sudo unzip ${PROTOC_FILE_NAME} -d /usr/local && \
+    rm -rf ${PROTOC_FILE_NAME}
 
 RUN echo "Building protoc..." && \
     mkdir -p ${GOPATH}/src/github.com/opencontainers && \
