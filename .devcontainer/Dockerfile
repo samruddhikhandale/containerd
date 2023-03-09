@@ -25,3 +25,5 @@ RUN echo "Building protoc..." && \
     cd runc && \
     make && \
     sudo make install
+
+COPY welcome-message.txt /usr/local/etc/vscode-dev-containers/first-run-notice.txt
