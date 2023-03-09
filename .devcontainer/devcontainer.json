@@ -3,7 +3,7 @@
 {
 	"name": "containerd",
 	"build": {
-		"context": "..",
+		"context": ".",
 		"dockerfile": "Dockerfile"
 	},
 	"features": {

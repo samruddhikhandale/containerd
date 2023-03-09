@@ -26,4 +26,7 @@ RUN echo "Building runc..." && \
     make && \
     sudo make install
 
+RUN echo "Installing bucketbunch" && \
+    go install github.com/estesp/bucketbench@latest
+
 COPY welcome-message.txt /usr/local/etc/vscode-dev-containers/first-run-notice.txt
