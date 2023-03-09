@@ -14,5 +14,8 @@
 
 	// Build containerd
 	"onCreateCommand": "make && sudo make install",
-	"remoteUser": "root"
+	"remoteUser": "root",
+	"hostRequirements": {
+		"cpus": 8
+	}
 }
