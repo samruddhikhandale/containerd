@@ -6,6 +6,8 @@
 		"context": "..",
 		"dockerfile": "Dockerfile"
 	},
+	"workspaceMount": "source=${localWorkspaceFolder},target=/go/src/github.com/container,type=bind,consistency=cached",
+	"workspaceFolder": "/go/src/github.com/containerd",
 	"features": {
 		"ghcr.io/devcontainers/features/docker-in-docker:2": {
 			"username": "root"
