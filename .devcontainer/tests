@@ -1,0 +1,17 @@
+make root-test
+
+✓ ✓  archive (4.213s)
+✓ ✓  mount (908ms)
+✓ ✓  oci (127ms)
+✓ ✓  runtime/v1/linux (74ms)
+✓ ✓  runtime/v2 (66ms)
+✓ ✓  snapshots/btrfs (36ms)
+✓ ✓  metadata (18.529s)
+✓ ✓  snapshots/native (14.318s)
+∅ ∅  snapshots/overlay/overlayutils (26ms)
+
+Failing -
+
+✓  snapshots/devmapper/dmsetup (502ms)
+✓  snapshots/overlay (28.085s)
+✓  snapshots/devmapper (57.179s)
