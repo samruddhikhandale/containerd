@@ -23,6 +23,7 @@ RUN echo "Downloading protoc..." && \
     PROTOC_FILE_NAME="protoc-${PROTOC_LATEST_VERSION}-linux-$(uname -m).zip" && \
     wget -c https://github.com/protocolbuffers/protobuf/releases/download/v${PROTOC_LATEST_VERSION}/${PROTOC_FILE_NAME} && \
     sudo unzip ${PROTOC_FILE_NAME} -d /usr/local && \
+    cp -R /usr/local/include/google/protobuf/* /usr/local/include/google && \
     rm -rf ${PROTOC_FILE_NAME}
 
 RUN echo "Building runc..." && \
