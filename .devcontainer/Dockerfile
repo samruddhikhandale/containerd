@@ -1,7 +1,5 @@
 FROM mcr.microsoft.com/devcontainers/go:0-1.20-bullseye
 
-USER root
-
 RUN apt-get update && export DEBIAN_FRONTEND=noninteractive \
     && apt-get -y install --no-install-recommends \
     curl \
@@ -10,6 +8,7 @@ RUN apt-get update && export DEBIAN_FRONTEND=noninteractive \
     btrfs-progs \
     libbtrfs-dev \
     make \
+    xfsprogs \
     libseccomp-dev
 
 COPY script/setup/install-dev-tools /tmp/install-dev-tools
@@ -27,7 +26,10 @@ RUN echo "Downloading protoc..." && \
     PROTOC_FILE_NAME="protoc-${PROTOC_LATEST_VERSION}-linux-$(uname -m).zip" && \
     wget -c https://github.com/protocolbuffers/protobuf/releases/download/v${PROTOC_LATEST_VERSION}/${PROTOC_FILE_NAME} && \
     unzip ${PROTOC_FILE_NAME} -d /usr/local && \
-    cp -R /usr/local/include/google/protobuf/* /usr/local/include/google && \
+    # cp -R /usr/local/include/google/protobuf/* /usr/local/include/google && \
+    mkdir -p /go/src/usr/local/bin /go/src/usr/local/include && \
+    mv /usr/local/bin/protoc /go/src/usr/local/bin/protoc && \
+    mv /usr/local/include/google /go/src/usr/local/include/google && \ 
     rm -rf ${PROTOC_FILE_NAME}
 
 RUN echo "Building runc..." && \
