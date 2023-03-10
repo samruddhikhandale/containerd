@@ -10,11 +10,13 @@ RUN apt-get update && export DEBIAN_FRONTEND=noninteractive \
     make \
     libseccomp-dev
 
-# COPY script/setup/install-dev-tools /tmp/install-dev-tools
+COPY script/setup/install-dev-tools /tmp/install-dev-tools
 
 ENV GOBIN ${GOPATH}/bin
-# RUN echo "Downloading dev tools..." && \
-#     bash /tmp/install-dev-tools
+RUN echo "Downloading dev tools..." && \
+    bash /tmp/install-dev-tools && \
+    mkdir -p ${GOPATH}/src/google/rpc && \
+    cp ${GOPATH}/pkg/mod/github.com/gogo/googleapis@v1.4.0/google/rpc/status.proto ${GOPATH}/src/google/rpc
 
 RUN echo "Downloading protoc..." && \
     # mkdir -p ${GOPATH}/src/google/protobuf && \
