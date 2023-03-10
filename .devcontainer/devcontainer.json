@@ -2,18 +2,16 @@
 // README at: https://github.com/devcontainers/templates/tree/main/src/go
 {
 	"name": "containerd",
-	"build": {
-		"context": "..",
-		"dockerfile": "Dockerfile"
-	},
+	"image": "mcr.microsoft.com/devcontainers/base:ubuntu-focal",
 	"workspaceFolder": "/go/src/github.com/containerd/containerd",
 	"workspaceMount": "source=${localWorkspaceFolder},target=/go/src/github.com/containerd/containerd,type=bind,consistency=cached",
 	"features": {
-		"ghcr.io/devcontainers/features/docker-in-docker:2": {
-			"username": "root"
+		"ghcr.io/devcontainers/features/docker-in-docker:2": {},
+		"ghcr.io/devcontainers/features/go:1": {
+			"username": "root",
+			"version": "1.20.2"
 		}
 	},
-
 	// Build containerd
 	// "onCreateCommand": "make && sudo make install",
 	// "remoteUser": "root",
