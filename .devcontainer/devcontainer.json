@@ -6,8 +6,8 @@
 		"context": "..",
 		"dockerfile": "Dockerfile"
 	},
-	"workspaceMount": "source=${localWorkspaceFolder},target=/go/src/github.com/container,type=bind,consistency=cached",
-	"workspaceFolder": "/go/src/github.com/containerd",
+	"workspaceFolder": "/go/src/github.com/containerd/containerd",
+	"workspaceMount": "source=${localWorkspaceFolder},target=/go/src/github.com/containerd/containerd,type=bind,consistency=cached",
 	"features": {
 		"ghcr.io/devcontainers/features/docker-in-docker:2": {
 			"username": "root"
@@ -15,7 +15,7 @@
 	},
 
 	// Build containerd
-	"onCreateCommand": "make && sudo make install",
+	// "onCreateCommand": "make && sudo make install",
 	"remoteUser": "root",
 	"hostRequirements": {
 		"cpus": 8
