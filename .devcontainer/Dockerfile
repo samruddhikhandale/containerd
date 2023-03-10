@@ -11,11 +11,12 @@ RUN apt-get update && export DEBIAN_FRONTEND=noninteractive \
     libseccomp-dev
 
 RUN echo "Downloading protoc..." && \
+    mkdir -p ${GOPATH}/src/github.com && \
     VERSION_LIST="$(curl -sSL -H "Accept: application/vnd.github.v3+json" "https://api.github.com/repos/protocolbuffers/protobuf/tags" | grep -oP '"name":\s*"v\K[0-9]+\.[0-9]+"' | tr -d '"' | sort -rV )" && \
     PROTOC_LATEST_VERSION="$(echo "${VERSION_LIST}" | head -n 1)" && \
     PROTOC_FILE_NAME="protoc-${PROTOC_LATEST_VERSION}-linux-$(uname -m).zip" && \
     wget -c https://github.com/protocolbuffers/protobuf/releases/download/v${PROTOC_LATEST_VERSION}/${PROTOC_FILE_NAME} && \
-    sudo unzip ${PROTOC_FILE_NAME} -d /usr/local && \
+    sudo unzip ${PROTOC_FILE_NAME} -d ${GOPATH}/src/github.com  && \
     rm -rf ${PROTOC_FILE_NAME}
 
 RUN echo "Building runc..." && \
@@ -25,6 +26,8 @@ RUN echo "Building runc..." && \
     cd runc && \
     make && \
     sudo make install
+
+ENV PATH ${PATH}:${GOPATH}/src/github.com 
 
 RUN echo "Installing bucketbunch..." && \
     go install github.com/estesp/bucketbench@latest
