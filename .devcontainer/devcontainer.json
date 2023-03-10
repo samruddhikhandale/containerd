@@ -4,19 +4,19 @@
 	"name": "containerd",
 	"build": {
 		"context": "..",
-		"dockerfile": "Dockerfile"
+		"dockerfile": "contrib/Dockerfile.test"
 	},
-	"workspaceFolder": "/go/src/github.com/containerd/containerd",
-	"workspaceMount": "source=${localWorkspaceFolder},target=/go/src/github.com/containerd/containerd,type=bind,consistency=cached",
-	"features": {
-		"ghcr.io/devcontainers/features/docker-in-docker:2": {
-			"username": "root"
-		}
-	},
+	// "workspaceFolder": "/go/src/github.com/containerd/containerd",
+	// "workspaceMount": "source=${localWorkspaceFolder},target=/go/src/github.com/containerd/containerd,type=bind,consistency=cached",
+	// "features": {
+	// 	"ghcr.io/devcontainers/features/docker-in-docker:2": {
+	// 		"username": "root"
+	// 	}
+	// },
 
 	// Build containerd
 	// "onCreateCommand": "make && sudo make install",
-	"remoteUser": "root",
+	// "remoteUser": "root",
 	"hostRequirements": {
 		"cpus": 8
 	}
