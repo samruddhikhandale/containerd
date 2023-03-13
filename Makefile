@@ -208,7 +208,10 @@ test: ## run tests, except integration tests and tests that require root
 
 root-test: ## run tests, except integration tests
 	@echo "$(WHALE) $@"
-	@$(GOTEST) ${TESTFLAGS} ${TEST_REQUIRES_ROOT_PACKAGES} -test.root
+	@( for container in $(TEST_REQUIRES_ROOT_PACKAGES); do \
+		sudo losetup -D; \
+		$(GOTEST) ${TESTFLAGS} $$container  -test.root; \
+	done )
 
 integration: ## run integration tests
 	@echo "$(WHALE) $@"
