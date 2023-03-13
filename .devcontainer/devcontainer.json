@@ -2,10 +2,7 @@
 // README at: https://github.com/devcontainers/templates/tree/main/src/go
 {
 	"name": "containerd",
-	"build": {
-		"context": "..",
-		"dockerfile": "Dockerfile"
-	},
+	"image": "mcr.microsoft.com/devcontainers/base:ubuntu-22.04",
 	"workspaceFolder": "/go/src/github.com/containerd/containerd",
 	"workspaceMount": "source=${localWorkspaceFolder},target=/go/src/github.com/containerd/containerd,type=bind,consistency=cached",
 	"features": {
@@ -16,7 +13,7 @@
 	},
 	// Build containerd
 	// "onCreateCommand": "make && sudo make install",
-	// "remoteUser": "root",
+	"remoteUser": "root",
 	"hostRequirements": {
 		"cpus": 8
 	}
