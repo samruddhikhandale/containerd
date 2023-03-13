@@ -9,9 +9,9 @@ make root-test
 ✓ ✓  metadata (18.529s)
 ✓ ✓  snapshots/native (14.318s)
 ∅ ∅  snapshots/overlay/overlayutils (26ms)
+✓ ✓  snapshots/overlay (28.085s)
 
 Failing -
 
 ✓  snapshots/devmapper/dmsetup (502ms)
-✓  snapshots/overlay (28.085s)
 ✓  snapshots/devmapper (57.179s)

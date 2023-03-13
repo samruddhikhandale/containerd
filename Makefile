@@ -209,7 +209,13 @@ test: ## run tests, except integration tests and tests that require root
 root-test: ## run tests, except integration tests
 	@echo "$(WHALE) $@"
 	@( for container in $(TEST_REQUIRES_ROOT_PACKAGES); do \
-		sudo losetup -D; \
+		dmsetup remove_all; \
+		losetup -J > /tmp/losetup-output.json; \
+		del=`jq -r '[.loopdevices[] | select(."back-file" | contains("deleted")) | .name]' /tmp/losetup-output.json`; \
+		for i in $${del}; \
+		do \
+			sudo losetup -D $$i; \
+		done; \
 		$(GOTEST) ${TESTFLAGS} $$container  -test.root; \
 	done )
 
