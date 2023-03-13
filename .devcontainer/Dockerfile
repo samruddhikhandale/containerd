@@ -1,17 +1,36 @@
-FROM mcr.microsoft.com/devcontainers/base:ubuntu-20.04
+FROM mcr.microsoft.com/devcontainers/go:latest
 
-# RUN apt-get update && export DEBIAN_FRONTEND=noninteractive \
-#     && apt-get -y install --no-install-recommends \
-#     curl \
-#     wget \
-#     unzip \
-#     btrfs-progs \
-#     libbtrfs-dev \
-#     make \
-#     xfsprogs \
-#     libseccomp-dev
+RUN apt-get update && export DEBIAN_FRONTEND=noninteractive \
+    && apt-get -y install --no-install-recommends \
+    gperf \
+    dmsetup \
+    software-properties-common
+    # curl \
+    # wget \
+    # unzip \
+    # btrfs-progs \
+    # libbtrfs-dev \
+    # make \
+    # xfsprogs \
+    # libseccomp-dev
 
-# COPY script/setup/install-dev-tools /tmp/install-dev-tools
+RUN mkdirp -p /tmp/scripts
+COPY script/setup/* /tmp/scripts
+
+RUN /tmp/scripts/install-seccomp && \
+    /tmp/scripts/install-runc && \
+    /tmp/scripts/install-cni $(grep containernetworking/plugins go.mod | awk '{print $2}') && \
+    /tmp/scripts/install-critools && \
+    /tmp/scripts/install-failpoint-binaries && \
+    /tmp/scripts/install-gotestsum && \
+    /tmp/scripts/install-teststat
+
+RUN sudo add-apt-repository -y ppa:criu/ppa && \
+    sudo apt-get update && \
+    sudo apt-get install -y criu
+
+COPY .devcontainer/setup-loopback.sh /tmp/setup-loopback.sh
+RUN sudo bash /tmp/setup-loopback.sh
 
 # ENV GOBIN ${GOPATH}/bin
 # RUN echo "Downloading dev tools..." && \

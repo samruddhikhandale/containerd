@@ -1,5 +1,5 @@
 sudo apt-get update
-sudo apt-get install -y gperf
+sudo apt-get install -y gperf dmsetup
 script/setup/install-seccomp
 script/setup/install-runc
 script/setup/install-cni $(grep containernetworking/plugins go.mod | awk '{print $2}')
@@ -9,7 +9,7 @@ script/setup/install-failpoint-binaries
 sudo apt-get -y install software-properties-common
 sudo add-apt-repository -y ppa:criu/ppa
 sudo apt-get update
-sudo apt-get install -y criu dmsetup
+sudo apt-get install -y criu
 
 make binaries GO_BUILD_FLAGS="-mod=vendor"
 sudo -E PATH=$PATH make install
@@ -17,6 +17,26 @@ sudo -E PATH=$PATH make install
 script/setup/install-gotestsum
 
 script/setup/install-teststat
+
+#extra
+
+sudo mkdir -p /etc/containerd
+sudo touch /etc/containerd/config.toml
+
+sudo tee config.toml > /dev/null \
+> << EOF
+> version = 2
+
+[plugins]
+  ...
+  [plugins."io.containerd.snapshotter.v1.devmapper"]
+    root_path = "/var/lib/containerd/devmapper"
+    pool_name = "containerd-pool"
+    base_image_size = "8192MB"
+  ...
+> EOF
+
+sudo bash .devcontainer/setup-loopback.sh 
 
 make test
 sudo -E PATH=$PATH make root-test

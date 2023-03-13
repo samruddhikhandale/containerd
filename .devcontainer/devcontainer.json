@@ -2,7 +2,10 @@
 // README at: https://github.com/devcontainers/templates/tree/main/src/go
 {
 	"name": "containerd",
-	"image": "mcr.microsoft.com/devcontainers/base:ubuntu-22.04",
+	"build": {
+		"context": "..",
+		"dockerfile": "Dockerfile"
+	},
 	"workspaceFolder": "/go/src/github.com/containerd/containerd",
 	"workspaceMount": "source=${localWorkspaceFolder},target=/go/src/github.com/containerd/containerd,type=bind,consistency=cached",
 	"features": {
