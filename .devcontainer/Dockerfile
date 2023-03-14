@@ -7,7 +7,6 @@ RUN apt-get update && export DEBIAN_FRONTEND=noninteractive \
         bc \
         software-properties-common \
         libseccomp-dev \
-        btrfs-progs \
         xfsprogs \
         lsof \
         iptables \
