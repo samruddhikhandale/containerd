@@ -1,67 +1,34 @@
-FROM mcr.microsoft.com/devcontainers/go:latest
+FROM mcr.microsoft.com/devcontainers/base:ubuntu-22.04
 
 RUN apt-get update && export DEBIAN_FRONTEND=noninteractive \
     && apt-get -y install --no-install-recommends \
-    gperf \
-    dmsetup \
-    software-properties-common
-    # curl \
-    # wget \
-    # unzip \
-    # btrfs-progs \
-    # libbtrfs-dev \
-    # make \
-    # xfsprogs \
-    # libseccomp-dev
+        gperf \
+        dmsetup \
+        bc \
+        software-properties-common \
+        libseccomp-dev \
+        btrfs-progs \
+        xfsprogs \
+        lsof \
+        iptables \
+        autoconf \
+        automake \
+        g++ \
+        libtool \
+        unzip \
+    && rm -rf /var/lib/apt/lists/*
 
-RUN mkdirp -p /tmp/scripts
-COPY script/setup/* /tmp/scripts
+RUN add-apt-repository -y ppa:criu/ppa && \
+    apt-get update && \
+    apt-get install -y criu && \
+    rm -rf /var/lib/apt/lists/*
 
-RUN /tmp/scripts/install-seccomp && \
-    /tmp/scripts/install-runc && \
-    /tmp/scripts/install-cni $(grep containernetworking/plugins go.mod | awk '{print $2}') && \
-    /tmp/scripts/install-critools && \
-    /tmp/scripts/install-failpoint-binaries && \
-    /tmp/scripts/install-gotestsum && \
-    /tmp/scripts/install-teststat
+ENV GITHUB_WORKSPACE=""
+ENV ENABLE_CRI_SANDBOXES=""
+ENV CONTAINERD_RUNTIME="io.containerd.runc.v2"
+ENV TEST_RUNTIME="io.containerd.runc.v2"
 
-RUN sudo add-apt-repository -y ppa:criu/ppa && \
-    sudo apt-get update && \
-    sudo apt-get install -y criu
-
-COPY .devcontainer/setup-loopback.sh /tmp/setup-loopback.sh
-RUN sudo bash /tmp/setup-loopback.sh
-
-# ENV GOBIN ${GOPATH}/bin
-# RUN echo "Downloading dev tools..." && \
-#     bash /tmp/install-dev-tools
-#     # mkdir -p ${GOPATH}/src/google/rpc && \
-#     # cp ${GOPATH}/pkg/mod/github.com/gogo/googleapis@v1.4.0/google/rpc/status.proto /usr/local/include/google/rpc 
-
-# RUN echo "Downloading protoc..." && \
-#     # mkdir -p ${GOPATH}/src/google/protobuf && \
-#     VERSION_LIST="$(curl -sSL -H "Accept: application/vnd.github.v3+json" "https://api.github.com/repos/protocolbuffers/protobuf/tags" | grep -oP '"name":\s*"v\K[0-9]+\.[0-9]+"' | tr -d '"' | sort -rV )" && \
-#     PROTOC_LATEST_VERSION="$(echo "${VERSION_LIST}" | head -n 1)" && \
-#     PROTOC_FILE_NAME="protoc-${PROTOC_LATEST_VERSION}-linux-$(uname -m).zip" && \
-#     wget -c https://github.com/protocolbuffers/protobuf/releases/download/v${PROTOC_LATEST_VERSION}/${PROTOC_FILE_NAME} && \
-#     unzip ${PROTOC_FILE_NAME} -d /usr/local && \
-#     # cp -R /usr/local/include/google/protobuf/* /usr/local/include/google && \
-#     mkdir -p /go/src/usr/local/bin /go/src/usr/local/include && \
-#     mv /usr/local/bin/protoc /go/src/usr/local/bin/protoc && \
-#     mv /usr/local/include/google /go/src/usr/local/include/google && \ 
-#     rm -rf ${PROTOC_FILE_NAME}
-
-# RUN echo "Building runc..." && \
-#     mkdir -p ${GOPATH}/src/github.com/opencontainers && \
-#     cd ${GOPATH}/src/github.com/opencontainers && \
-#     git clone --depth=1 https://github.com/opencontainers/runc && \
-#     cd runc && \
-#     make && \
-#     make install
-
-# RUN echo "Installing bucketbunch..." && \
-#     go install github.com/estesp/bucketbench@latest
+COPY contrib/Dockerfile.test.d/docker-entrypoint.sh /docker-entrypoint.sh
+ENTRYPOINT ["/docker-entrypoint.sh"]
 
 COPY .devcontainer/welcome-message.txt /usr/local/etc/vscode-dev-containers/first-run-notice.txt
-
-#  cp -R /go/pkg/mod/github.com/gogo/googleapis@v1.4.0/google/rpc /go/src/google/ workssssss
