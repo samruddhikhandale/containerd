@@ -15,6 +15,10 @@ RUN apt-get update && export DEBIAN_FRONTEND=noninteractive \
         g++ \
         libtool \
         unzip \
+        rsyslog \
+        systemd \
+        systemd-cron \
+    && rm -f /usr/local/bin/systemctl \
     && rm -rf /var/lib/apt/lists/*
 
 RUN add-apt-repository -y ppa:criu/ppa && \
@@ -30,4 +34,5 @@ ENV TEST_RUNTIME="io.containerd.runc.v2"
 COPY contrib/Dockerfile.test.d/docker-entrypoint.sh /docker-entrypoint.sh
 ENTRYPOINT ["/docker-entrypoint.sh"]
 
+CMD ["/lib/systemd/systemd", "--system", "--unit=basic.target"]
 COPY .devcontainer/welcome-message.txt /usr/local/etc/vscode-dev-containers/first-run-notice.txt

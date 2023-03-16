@@ -20,5 +20,7 @@
 	"remoteUser": "root",
 	"hostRequirements": {
 		"cpus": 8
-	}
+	},
+	"overrideCommand": false,
+	"privileged": true
 }
