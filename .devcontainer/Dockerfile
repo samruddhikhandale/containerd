@@ -7,4 +7,28 @@ RUN apt-get update \
     #  Clean up
     && apt-get clean && rm -rf /var/lib/apt/lists/*
 
+RUN apt-get update && export DEBIAN_FRONTEND=noninteractive \
+    && apt-get -y install --no-install-recommends \
+        gperf \
+        software-properties-common \
+        libseccomp-dev \
+        xfsprogs \
+        lsof \
+        iptables \
+        autoconf \
+        automake \
+        g++ \
+        libtool \
+        unzip \
+        inotify-tools \
+        entr \
+    && rm -rf /var/lib/apt/lists/*
+
+RUN add-apt-repository -y ppa:criu/ppa && \
+    apt-get update && \
+    apt-get install -y criu && \
+    rm -rf /var/lib/apt/lists/*
+
+COPY .devcontainer/welcome-message.txt /usr/local/etc/vscode-dev-containers/first-run-notice.txt
+
 CMD ["/lib/systemd/systemd", "--system", "--unit=basic.target"]
