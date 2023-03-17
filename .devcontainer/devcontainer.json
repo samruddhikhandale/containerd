@@ -21,6 +21,7 @@
 	"hostRequirements": {
 		"cpus": 8
 	},
-	"overrideCommand": false,
-	"privileged": true
+	"runArgs": [
+		"--ipc=host"
+	]
 }
