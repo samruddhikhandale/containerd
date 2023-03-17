@@ -16,7 +16,11 @@
 	},
 	"onCreateCommand": "sudo bash .devcontainer/setup.sh",
 	"waitFor": "postCreateCommand",
-	// "remoteUser": "root",
+	"postStartCommand": [
+		"nohup bash -c 'sudo .devcontainer/background.sh &'",
+		"nohup bash -c 'sudo devcontainer/background-loop.sh '"
+	],
+	"remoteUser": "root",
 	"hostRequirements": {
 		"cpus": 8
 	},

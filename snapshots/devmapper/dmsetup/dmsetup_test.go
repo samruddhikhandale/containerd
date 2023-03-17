@@ -27,7 +27,6 @@ import (
 	"github.com/containerd/containerd/pkg/testutil"
 	"github.com/docker/go-units"
 	"github.com/stretchr/testify/assert"
-	exec "golang.org/x/sys/execabs"
 	"golang.org/x/sys/unix"
 )
 
@@ -112,14 +111,12 @@ func testDeleteSnapshot(t *testing.T) {
 }
 
 func testActivateDevice(t *testing.T) {
-	exec.Command("vgscan", "--mknodes").CombinedOutput()
 	err := ActivateDevice(testPoolName, testDeviceName, 1, 1024, "")
 	assert.Nil(t, err, "failed to activate device")
 
 	err = ActivateDevice(testPoolName, testDeviceName, 1, 1024, "")
 	assert.Equal(t, err, unix.EBUSY)
 
-	exec.Command("vgscan", "--mknodes").CombinedOutput()
 	if _, err := os.Stat("/dev/mapper/" + testDeviceName); err != nil && !os.IsExist(err) {
 		assert.Nil(t, err, "failed to stat device")
 	}
@@ -165,7 +162,6 @@ func testSuspendResumeDevice(t *testing.T) {
 }
 
 func testDiscardBlocks(t *testing.T) {
-	exec.Command("vgscan", "--mknodes").CombinedOutput()
 	err := DiscardBlocks(testDeviceName)
 	assert.Nil(t, err, "failed to discard blocks")
 }
