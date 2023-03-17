@@ -5,6 +5,9 @@
 	},
 	"workspaceFolder": "/go/src/github.com/containerd/containerd",
 	"workspaceMount": "source=${localWorkspaceFolder},target=/go/src/github.com/containerd/containerd,type=bind,consistency=cached",
+	"features": {
+		"ghcr.io/devcontainers/features/docker-in-docker:2": {}
+	},
 	"overrideCommand": false,
 	"privileged": true,
 	"runArgs": [
