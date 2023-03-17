@@ -1,0 +1,10 @@
+{
+	"build": {
+		"dockerfile": "Dockerfile"
+	},
+	"overrideCommand": false,
+	"privileged": true,
+	"runArgs": [
+		"--ipc=host"
+	]
+}
