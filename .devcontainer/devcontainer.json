@@ -3,6 +3,8 @@
 		"context": "..",
 		"dockerfile": "Dockerfile"
 	},
+	"workspaceFolder": "/go/src/github.com/containerd/containerd",
+	"workspaceMount": "source=${localWorkspaceFolder},target=/go/src/github.com/containerd/containerd,type=bind,consistency=cached",
 	"overrideCommand": false,
 	"privileged": true,
 	"runArgs": [
