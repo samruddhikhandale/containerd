@@ -6,7 +6,6 @@
 		"context": "..",
 		"dockerfile": "Dockerfile"
 	},
-	// "image": "mcr.microsoft.com/devcontainers/base:ubuntu-22.04",
 	"workspaceFolder": "/go/src/github.com/containerd/containerd",
 	"workspaceMount": "source=${localWorkspaceFolder},target=/go/src/github.com/containerd/containerd,type=bind,consistency=cached",
 	"features": {
@@ -17,11 +16,12 @@
 	},
 	"onCreateCommand": "sudo bash .devcontainer/setup.sh",
 	"waitFor": "postCreateCommand",
-	"remoteUser": "root",
+	// "remoteUser": "root",
 	"hostRequirements": {
 		"cpus": 8
 	},
 	"runArgs": [
-		"--ipc=host"
+		"--ipc=host",
+		"--privileged"
 	]
 }

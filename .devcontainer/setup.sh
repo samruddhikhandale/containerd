@@ -20,5 +20,7 @@ script/setup/install-protobuf \
     && mv /usr/local/bin/protoc /go/src/usr/local/bin/protoc \
     && mv /usr/local/include/google /go/src/usr/local/include/google
 
+go install github.com/pilebones/go-udev@latest
+
 make binaries GO_BUILD_FLAGS="-mod=vendor"
 sudo -E PATH=$PATH make install
