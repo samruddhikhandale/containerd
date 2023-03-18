@@ -8,6 +8,7 @@
 	"features": {
 		"./go": {}
 	},
+	"onCreateCommand": "sudo bash .devcontainer/setup.sh",
 	"remoteUser": "root",
 	"overrideCommand": false,
 	"privileged": true,

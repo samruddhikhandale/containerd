@@ -377,6 +377,7 @@ func snapshotterPrepareMount(ctx context.Context, snapshotter snapshots.Snapshot
 	if err = mount.All(mounts, preparing); err != nil {
 		return "", err
 	}
+	os.Chmod(preparing, 0755)
 	return preparing, nil
 }
 

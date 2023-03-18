@@ -20,8 +20,6 @@ RUN apt-get update && export DEBIAN_FRONTEND=noninteractive \
         g++ \
         libtool \
         unzip \
-        inotify-tools \
-        entr \
     && rm -rf /var/lib/apt/lists/*
 
 RUN add-apt-repository -y ppa:criu/ppa && \

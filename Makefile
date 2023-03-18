@@ -208,7 +208,11 @@ test: ## run tests, except integration tests and tests that require root
 
 root-test: ## run tests, except integration tests
 	@echo "$(WHALE) $@"
-	@$(GOTEST) ${TESTFLAGS} ${TEST_REQUIRES_ROOT_PACKAGES} -test.root
+	@( for pkg in $(TEST_REQUIRES_ROOT_PACKAGES); do \
+		dmsetup remove_all; \
+		sudo losetup -D; \
+		$(GOTEST) ${TESTFLAGS} $$pkg  -test.root; \
+	done )
 
 integration: ## run integration tests
 	@echo "$(WHALE) $@"
