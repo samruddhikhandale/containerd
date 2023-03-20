@@ -1,7 +1,7 @@
 FROM  mcr.microsoft.com/devcontainers/base:jammy
 
 RUN apt-get update \
-    && apt-get install --no-install-recommends -y rsyslog systemd systemd-cron dmsetup bc lvm2 udev\
+    && apt-get install --no-install-recommends -y rsyslog systemd systemd-cron dmsetup bc lvm2 udev \
     # Fix a bug with common-debian script
     && rm -f /usr/local/bin/systemctl \
     #  Clean up
@@ -20,6 +20,7 @@ RUN apt-get update && export DEBIAN_FRONTEND=noninteractive \
         g++ \
         libtool \
         unzip \
+        inotify-tools \
     && rm -rf /var/lib/apt/lists/*
 
 RUN add-apt-repository -y ppa:criu/ppa && \
@@ -28,5 +29,9 @@ RUN add-apt-repository -y ppa:criu/ppa && \
     rm -rf /var/lib/apt/lists/*
 
 COPY .devcontainer/welcome-message.txt /usr/local/etc/vscode-dev-containers/first-run-notice.txt
+
+# Not sure if needed
+RUN mkdir -p /etc/containerd
+COPY contrib/Dockerfile.test.d/cri-in-userns/etc_containerd_config.toml /etc/containerd/config.toml
 
 CMD ["/lib/systemd/systemd", "--system", "--unit=basic.target"]

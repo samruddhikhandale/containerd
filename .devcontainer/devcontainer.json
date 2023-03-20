@@ -9,8 +9,7 @@
 		"ghcr.io/devcontainers/features/docker-in-docker:1": {},
 		"./go": {}
 	},
-	"onCreateCommand": "sudo bash .devcontainer/setup.sh",
-	"remoteUser": "root",
+	"postCreateCommand": "sudo bash .devcontainer/setup.sh",
 	"overrideCommand": false,
 	"privileged": true,
 	"runArgs": [
