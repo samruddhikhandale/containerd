@@ -20,6 +20,7 @@ package dmsetup
 
 import (
 	"os"
+	"os/exec"
 	"strings"
 	"testing"
 
@@ -117,7 +118,7 @@ func testActivateDevice(t *testing.T) {
 	err = ActivateDevice(testPoolName, testDeviceName, 1, 1024, "")
 	assert.Equal(t, err, unix.EBUSY)
 
-	if _, err := os.Stat("/dev/mapper/" + testDeviceName); err != nil && !os.IsExist(err) {
+	if _, err := exec.Command("stat", "/dev/mapper/" + testDeviceName).CombinedOutput(); err != nil && !os.IsExist(err) {
 		assert.Nil(t, err, "failed to stat device")
 	}
 
