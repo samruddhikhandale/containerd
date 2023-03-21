@@ -26,6 +26,8 @@
 	},
 	"runArgs": [
 		"--ipc=host",
+		"--volume=/dev:/dev",
+		"--volume=/run/udev:/run/udev",
 		"--privileged"
 	]
 }
