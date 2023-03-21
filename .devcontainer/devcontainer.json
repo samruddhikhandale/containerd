@@ -16,6 +16,8 @@
 	"overrideCommand": false,
 	"privileged": true,
 	"runArgs": [
-		"--ipc=host"
+		"--ipc=host",
+		"--volume=/dev:/dev",
+		"--volume=/run/udev:/run/udev"
 	]
 }
