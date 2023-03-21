@@ -1,3 +1,4 @@
+# For details, see https://github.com/devcontainers/images/tree/main/src/base-ubuntu
 FROM mcr.microsoft.com/devcontainers/base:1-ubuntu-22.04
 
 RUN apt-get update && export DEBIAN_FRONTEND=noninteractive \
