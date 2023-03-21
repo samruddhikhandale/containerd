@@ -19,6 +19,3 @@ script/setup/install-protobuf \
     && mkdir -p /go/src/usr/local/bin /go/src/usr/local/include \
     && mv /usr/local/bin/protoc /go/src/usr/local/bin/protoc \
     && mv /usr/local/include/google /go/src/usr/local/include/google
-
-make binaries GO_BUILD_FLAGS="-mod=vendor"
-sudo -E PATH=$PATH make install

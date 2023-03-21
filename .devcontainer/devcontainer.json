@@ -9,7 +9,10 @@
 		"ghcr.io/devcontainers/features/docker-in-docker:1": {},
 		"./go": {}
 	},
-	"postCreateCommand": "sudo bash .devcontainer/setup.sh",
+	"onCreateCommand": "sudo bash .devcontainer/setup.sh",
+	"postAttachCommand": {
+		"Build": "make binaries && sudo -E PATH=$PATH make install"
+	},
 	"overrideCommand": false,
 	"privileged": true,
 	"runArgs": [
